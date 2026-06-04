@@ -18,16 +18,12 @@ export type MenuEntry = {
   label: string;
   /** Curated cover image src for this voice, if any. */
   cover?: string;
-  /** Right-aligned meta (e.g. count · years for Opere). */
-  meta?: string;
-  /** Indented sub-entries (the bodies of work under Opere). */
+  /** Sub-entries (the bodies of work under Opere), each with its count. */
   children?: { key: string; href: string; label: string; meta?: string }[];
 };
 
-/** Contatti has no page of its own — it expands inline within the menu. */
+/** Contatti has no page of its own — it lives in the menu's colophon band. */
 export type MenuContact = {
-  label: string;
-  cover?: string;
   email: string;
   emailLabel: string;
   instagramHandle: string;
@@ -122,11 +118,11 @@ export default function MenuOverlay({
     { dependencies: [open], scope: overlay },
   );
 
-  // All background faces, including Contatti's (which has no entry row).
-  const faces = [
-    ...entries.map((e) => ({ key: e.key, cover: e.cover })),
-    { key: "contatti", cover: contact.cover },
-  ].filter((f) => f.cover);
+  // Background faces for the index voices. Contatti lives in the colophon band
+  // (its own ground), so it has no backdrop here.
+  const faces = entries
+    .map((e) => ({ key: e.key, cover: e.cover }))
+    .filter((f) => f.cover);
 
   // The image behind the type: the active voice's face, or the first as a
   // resting state so the stage is never empty.
@@ -226,8 +222,9 @@ export default function MenuOverlay({
           </button>
         </div>
 
-        {/* The index rows — left-aligned, vertically centered. */}
-        <nav className="relative flex h-full flex-col justify-center px-6 sm:px-10 lg:px-16">
+        {/* The index rows — left-aligned, vertically centered between the top
+            bar and the colophon band (top/bottom padding keeps clear of both). */}
+        <nav className="relative flex h-full flex-col justify-center px-6 pt-20 pb-32 sm:px-10 lg:px-16">
           <ul
             className="flex w-full max-w-5xl flex-col"
             onMouseLeave={() => setActive(null)}
@@ -236,163 +233,125 @@ export default function MenuOverlay({
               const dimmed = active !== null && active !== entry.key;
               const isActive = active === entry.key;
               return (
-                <li key={entry.key} className="border-t border-rule/15">
-                  <Link
-                    href={entry.href}
-                    data-cursor="view"
-                    onMouseEnter={() => setActive(entry.key)}
-                    onFocus={() => setActive(entry.key)}
-                    className="group block py-[clamp(0.6rem,1.8vh,1.3rem)] outline-none"
-                  >
-                    <span className="flex items-baseline justify-between gap-6">
-                      <span className="overflow-hidden">
-                        <span
-                          data-menu-rowtext
-                          className={`relative inline-block font-serif text-[clamp(2rem,7.5vw,5.5rem)] leading-[1.02] text-bone transition-opacity duration-300 ${
-                            dimmed ? "opacity-40" : "opacity-100"
-                          }`}
-                        >
-                          {entry.label}
-                          {/* Ember underline marks the active voice. */}
-                          <span
-                            aria-hidden
-                            className={`absolute -bottom-1 left-0 h-[2px] bg-accent transition-[width] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                              isActive ? "w-full" : "w-0"
-                            }`}
-                          />
-                        </span>
+                <li
+                  key={entry.key}
+                  className="border-t border-rule/15"
+                  onMouseEnter={() => setActive(entry.key)}
+                >
+                  {/* Title + bodies-of-work. The children are a numbered
+                      catalogue sub-index: inline beside the big word on lg+
+                      (aligned to its foot), stacked beneath on smaller screens.
+                      The list reveals on the active row only and is always shown
+                      on touch. It sits on its own solid plate so it stays
+                      legible over the artwork. Title and child links are
+                      siblings (never nested anchors). */}
+                  <div className="flex flex-col gap-x-10 py-[clamp(0.6rem,1.8vh,1.3rem)] lg:flex-row lg:items-end lg:justify-between">
+                    <Link
+                      href={entry.href}
+                      data-cursor="view"
+                      onFocus={() => setActive(entry.key)}
+                      className="group block outline-none"
+                    >
+                      {/* No overflow-hidden: the GSAP reveal uses clipPath on
+                          the inner span, which clips to the glyph box (descenders
+                          included) and never permanently crops them. */}
+                      <span
+                        data-menu-rowtext
+                        className={`inline-block font-serif text-[clamp(2rem,7.5vw,5.5rem)] leading-[1.1] text-bone transition-opacity duration-300 ${
+                          dimmed ? "opacity-40" : "opacity-100"
+                        }`}
+                      >
+                        {entry.label}
                       </span>
-                      {entry.meta && (
-                        <span
-                          className={`hidden shrink-0 self-center font-sans text-xs tracking-[0.1em] tabular-nums transition-colors duration-300 sm:block ${
-                            dimmed ? "text-muted/40" : "text-muted"
-                          }`}
-                        >
-                          {entry.meta}
-                        </span>
-                      )}
-                    </span>
-                  </Link>
+                    </Link>
 
-                  {/* Bodies of work, indented under Opere. */}
-                  {entry.children && (
-                    <ul className="flex flex-wrap gap-x-7 gap-y-1 pb-[clamp(0.6rem,1.8vh,1.3rem)]">
-                      {entry.children.map((child) => (
-                        <li key={child.key}>
-                          <Link
-                            href={child.href}
-                            data-cursor="view"
-                            onMouseEnter={() => setActive(entry.key)}
-                            className="group inline-flex items-baseline gap-1.5 font-sans text-sm tracking-[0.02em] text-muted transition-colors hover:text-bone"
-                          >
-                            {child.label}
-                            {child.meta && (
-                              <span className="font-sans text-xs text-rule tabular-nums">
-                                {child.meta}
-                              </span>
-                            )}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                    {entry.children && (
+                      <ul
+                        className={`mb-[clamp(0.4rem,1.1vh,1rem)] flex flex-col gap-[0.15em] transition-opacity duration-300 max-lg:mt-3 max-lg:opacity-100 lg:items-end lg:text-right ${
+                          isActive ? "lg:opacity-100" : "lg:opacity-0"
+                        }`}
+                      >
+                        {entry.children.map((child) => (
+                          <li key={child.key}>
+                            <Link
+                              href={child.href}
+                              data-cursor="view"
+                              className="group inline-flex items-baseline gap-2 font-serif text-[clamp(1.05rem,1.7vw,1.5rem)] leading-tight text-bone/85 transition-colors hover:text-accent [text-shadow:0_1px_12px_rgba(13,11,8,0.9)]"
+                            >
+                              {child.label}
+                              {child.meta && (
+                                <span className="font-sans text-[0.65em] text-muted tabular-nums [text-shadow:0_1px_10px_rgba(13,11,8,0.95)]">
+                                  {child.meta}
+                                </span>
+                              )}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </li>
               );
             })}
-
-            {/* Contatti: no page — an inline row that expands to reveal the
-                contact channels. Behaves like the other voices for hover state
-                and curated background. */}
-            <li
-              className="border-t border-rule/15"
-              onMouseEnter={() => setActive("contatti")}
-              onFocus={() => setActive("contatti")}
-            >
-              <div className="block py-[clamp(0.6rem,1.8vh,1.3rem)]">
-                <span className="flex items-baseline justify-between gap-6">
-                  <span className="overflow-hidden">
-                    <span
-                      data-menu-rowtext
-                      className={`relative inline-block font-serif text-[clamp(2rem,7.5vw,5.5rem)] leading-[1.02] text-bone transition-opacity duration-300 ${
-                        active !== null && active !== "contatti"
-                          ? "opacity-40"
-                          : "opacity-100"
-                      }`}
-                    >
-                      {contact.label}
-                      <span
-                        aria-hidden
-                        className={`absolute -bottom-1 left-0 h-[2px] bg-accent transition-[width] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          active === "contatti" ? "w-full" : "w-0"
-                        }`}
-                      />
-                    </span>
-                  </span>
-                </span>
-
-                {/* Channels, revealed when Contatti is engaged (always shown
-                    on touch where there is no hover). */}
-                <div
-                  className={`grid transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] max-md:mt-2 max-md:grid-rows-[1fr] max-md:opacity-100 ${
-                    active === "contatti"
-                      ? "mt-2 grid-rows-[1fr] opacity-100"
-                      : "mt-0 grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <ul className="flex flex-wrap gap-x-8 gap-y-1">
-                      <li>
-                        <a
-                          href={`mailto:${contact.email}`}
-                          data-cursor="view"
-                          className="group inline-flex items-baseline gap-2 font-sans text-sm text-muted transition-colors hover:text-bone"
-                        >
-                          <span className="text-xs tracking-[0.1em] text-rule uppercase">
-                            {contact.emailLabel}
-                          </span>
-                          {contact.email}
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href={contact.instagramUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          data-cursor="view"
-                          className="group inline-flex items-baseline gap-2 font-sans text-sm text-muted transition-colors hover:text-bone"
-                        >
-                          <span className="text-xs tracking-[0.1em] text-rule uppercase">
-                            {contact.instagramLabel}
-                          </span>
-                          {contact.instagramHandle}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li>
           </ul>
         </nav>
 
-        {/* Bottom chrome: tagline + language toggle. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between px-6 py-5 sm:px-10 lg:px-16">
-          <span className="font-serif text-sm text-muted italic">
-            {labels.tagline}
-          </span>
-          <div className="pointer-events-auto flex items-center gap-1.5 font-sans text-[0.8125rem]">
-            <span className="text-accent">{lang.toUpperCase()}</span>
-            <span className="text-rule" aria-hidden>
-              /
-            </span>
-            <Link
-              href={switchHref}
-              data-cursor="view"
-              className="text-muted transition-colors hover:text-bone"
-              aria-label={`Switch to ${otherLang === "it" ? "Italiano" : "English"}`}
-            >
-              {otherLang.toUpperCase()}
-            </Link>
+        {/* The Colophon: a contact band at the foot of the menu, on solid crypt
+            ground (no image behind) so the channels are always legible — like
+            the contact line in a catalogue's colophon. Hairline rule separates
+            it from the index above. */}
+        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-rule/15 bg-crypt-deep">
+          <div className="flex flex-col gap-4 px-6 py-5 sm:px-10 md:flex-row md:items-center md:justify-between lg:px-16">
+            {/* Channels: email + Instagram, comfortably readable. */}
+            <ul className="flex flex-wrap items-baseline gap-x-8 gap-y-2">
+              <li>
+                <a
+                  href={`mailto:${contact.email}`}
+                  data-cursor="view"
+                  className="group inline-flex items-baseline gap-2.5 font-sans text-[0.9375rem] text-bone transition-colors hover:text-accent"
+                >
+                  <span className="font-sans text-[0.6875rem] tracking-[0.14em] text-rule uppercase">
+                    {contact.emailLabel}
+                  </span>
+                  {contact.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={contact.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="view"
+                  className="group inline-flex items-baseline gap-2.5 font-sans text-[0.9375rem] text-bone transition-colors hover:text-accent"
+                >
+                  <span className="font-sans text-[0.6875rem] tracking-[0.14em] text-rule uppercase">
+                    {contact.instagramLabel}
+                  </span>
+                  {contact.instagramHandle}
+                </a>
+              </li>
+            </ul>
+
+            {/* Tagline + language toggle. */}
+            <div className="flex items-center gap-5">
+              <span className="hidden font-serif text-sm text-muted italic lg:inline">
+                {labels.tagline}
+              </span>
+              <div className="flex items-center gap-1.5 font-sans text-[0.8125rem]">
+                <span className="text-accent">{lang.toUpperCase()}</span>
+                <span className="text-rule" aria-hidden>
+                  /
+                </span>
+                <Link
+                  href={switchHref}
+                  data-cursor="view"
+                  className="text-muted transition-colors hover:text-bone"
+                  aria-label={`Switch to ${otherLang === "it" ? "Italiano" : "English"}`}
+                >
+                  {otherLang.toUpperCase()}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

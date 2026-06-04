@@ -5,7 +5,6 @@ import "../globals.css";
 import { getDictionary, hasLocale, LOCALES } from "./dictionaries";
 import {
   CATEGORIES,
-  getAllArtworks,
   getArtworksByCategory,
   getMenuFace,
 } from "@/lib/artworks";
@@ -51,25 +50,14 @@ export default async function RootLayout({
 
   const dict = await getDictionary(lang);
 
-  // The Index entries: each voice borrows a curated artwork face. Opere carries
-  // a count · years meta line and nests the three bodies of work.
-  const totalWorks = getAllArtworks().length;
-  const yearsFor = (works: { year?: string }[]) => {
-    const ys = works
-      .flatMap((w) => (w.year ? w.year.split("-") : []))
-      .map((y) => parseInt(y, 10))
-      .filter((y) => !Number.isNaN(y));
-    return ys.length ? `${Math.min(...ys)}–${Math.max(...ys)}` : undefined;
-  };
-  const allYears = yearsFor(getAllArtworks());
-
+  // The Index entries: each voice borrows a curated artwork face. Opere nests
+  // the three bodies of work (each with its count) as a hover-revealed sub-row.
   const menuEntries: MenuEntry[] = [
     {
       key: "opere",
       href: `/${lang}/opere`,
       label: dict.nav.opere,
       cover: getMenuFace("opere")?.src,
-      meta: `${totalWorks}${allYears ? ` · ${allYears}` : ""}`,
       children: CATEGORIES.map((category) => {
         const works = getArtworksByCategory(category);
         return {
@@ -94,11 +82,9 @@ export default async function RootLayout({
     },
   ];
 
-  // Contatti lives inside the menu (no page of its own): an expandable row
-  // revealing email + Instagram, with its own curated cover behind it.
+  // Contatti lives in the menu's colophon band (no page of its own): email +
+  // Instagram on solid ground at the foot of the open menu.
   const contact = {
-    label: dict.nav.contatti,
-    cover: getMenuFace("contatti")?.src,
     email: dict.menu.email,
     emailLabel: dict.menu.emailLabel,
     instagramHandle: dict.menu.instagramHandle,
