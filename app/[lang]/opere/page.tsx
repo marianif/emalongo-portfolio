@@ -1,19 +1,22 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "../dictionaries";
-import {
-  CATEGORIES,
-  getAllArtworks,
-  getArtworksByCategory,
-  type Category,
-} from "@/lib/artworks";
-import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { CATEGORIES, getAllArtworks, type Category } from "@/lib/artworks";
+import GalleryClient, {
+  type GalleryLabels,
+} from "@/components/gallery/GalleryClient";
+import BackToTop from "@/components/gallery/BackToTop";
 import PageTransition from "@/components/motion/PageTransition";
 
 function isCategory(value: string | undefined): value is Category {
   return !!value && (CATEGORIES as string[]).includes(value);
 }
 
+/**
+ * The salon wall. The page is one static document: it ships the full
+ * collection once, and filtering happens client-side (GalleryClient). The
+ * `?categoria=` param is read only to seed the initial filter, so a menu
+ * deep-link or a shared URL lands pre-filtered.
+ */
 export default async function OperePage({
   params,
   searchParams,
@@ -23,26 +26,28 @@ export default async function OperePage({
   const dict = await getDictionary(lang);
 
   const { categoria } = await searchParams;
-  const active = Array.isArray(categoria) ? categoria[0] : categoria;
-  const artworks = isCategory(active)
-    ? getArtworksByCategory(active)
-    : getAllArtworks();
+  const raw = Array.isArray(categoria) ? categoria[0] : categoria;
+  const initial = isCategory(raw) ? raw : "all";
+
+  const artworks = getAllArtworks();
+
+  const labels: GalleryLabels = {
+    title: dict.opere.title,
+    all: dict.opere.all,
+    categories: dict.categories,
+    works: dict.opere.works,
+  };
 
   return (
     <PageTransition>
-      <section className="bg-crypt pt-24 sm:pt-28">
-        <header className="p-6">
-          <h1>{dict.opere.title}</h1>
-          <nav className="flex gap-4">
-            <Link href={`/${lang}/opere`}>{dict.opere.all}</Link>
-            {CATEGORIES.map((cat) => (
-              <Link key={cat} href={`/${lang}/opere?categoria=${cat}`}>
-                {dict.categories[cat]}
-              </Link>
-            ))}
-          </nav>
-        </header>
-        <GalleryGrid artworks={artworks} lang={lang} />
+      <section className="bg-crypt">
+        <GalleryClient
+          artworks={artworks}
+          lang={lang}
+          initial={initial}
+          labels={labels}
+        />
+        <BackToTop label={dict.opere.backToTop} />
       </section>
     </PageTransition>
   );

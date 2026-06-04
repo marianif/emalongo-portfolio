@@ -50,7 +50,9 @@
   },
   "opere": {
     "title": "Works",
-    "all": "All"
+    "all": "All",
+    "works": "works",
+    "backToTop": "Back to top"
   },
   "artwork": {
     "technique": "Technique",

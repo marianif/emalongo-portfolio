@@ -50,7 +50,9 @@
   },
   "opere": {
     "title": "Opere",
-    "all": "Tutte"
+    "all": "Tutte",
+    "works": "opere",
+    "backToTop": "Torna su"
   },
   "artwork": {
     "technique": "Tecnica",
