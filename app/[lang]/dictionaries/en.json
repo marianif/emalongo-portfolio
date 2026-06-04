@@ -58,7 +58,11 @@
     "technique": "Technique",
     "dimensions": "Dimensions",
     "year": "Year",
-    "back": "Back to works"
+    "category": "Series",
+    "back": "Back to works",
+    "prev": "Previous work",
+    "next": "Next work",
+    "untitled": "Untitled"
   },
   "footer": {
     "rights": "All rights reserved"

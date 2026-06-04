@@ -1,10 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, LOCALES } from "../../dictionaries";
-import { getAllArtworks, getArtworkBySlug } from "@/lib/artworks";
-import { getImageSrc } from "@/lib/images";
+import {
+  getAllArtworks,
+  getArtworkBySlug,
+  getArtworkNeighbors,
+} from "@/lib/artworks";
 import PageTransition from "@/components/motion/PageTransition";
+import ArtworkViewer from "@/components/gallery/ArtworkViewer";
 
 export function generateStaticParams() {
   return LOCALES.flatMap((lang) =>
@@ -21,44 +24,62 @@ export default async function ArtworkPage({
   const artwork = getArtworkBySlug(slug);
   if (!artwork) notFound();
 
-  const title =
-    lang === "en" && artwork.titleEn ? artwork.titleEn : artwork.title;
+  const resolveTitle = (w: { title: string; titleEn?: string }) =>
+    lang === "en" && w.titleEn ? w.titleEn : w.title || dict.artwork.untitled;
+
+  const title = resolveTitle(artwork);
+
+  // Only the fields that actually parsed out of the filename get a row; the
+  // caption never shows an empty label or a dangling separator. Category is
+  // always known, and grounds the work in its body of work.
+  const meta = [
+    artwork.technique && {
+      label: dict.artwork.technique,
+      value: artwork.technique,
+    },
+    artwork.dimensions && {
+      label: dict.artwork.dimensions,
+      value: artwork.dimensions,
+    },
+    artwork.year && { label: dict.artwork.year, value: artwork.year },
+    {
+      label: dict.artwork.category,
+      value: dict.categories[artwork.category],
+    },
+  ].filter((m): m is { label: string; value: string } => Boolean(m));
+
+  const { prev, next } = getArtworkNeighbors(slug);
 
   return (
     <PageTransition>
-      <article className="bg-crypt p-6 pt-24 sm:pt-28">
-        <Link href={`/${lang}/opere`}>← {dict.artwork.back}</Link>
-        <div className="relative my-6 aspect-[3/4] w-full max-w-3xl bg-neutral-900">
-          <Image
-            src={getImageSrc(artwork.src, { width: 1600 })}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="object-contain"
-            priority
-          />
+      <article className="bg-crypt px-6 pt-24 pb-24 sm:pt-28 sm:pb-32">
+        <div className="mx-auto max-w-5xl">
+          {/* The way back to the wall: a single quiet line at the column's
+              top-left, clear of the work below it. Kept compact so it costs the
+              artwork almost no vertical room. */}
+          <Link
+            href={`/${lang}/opere`}
+            data-cursor="view"
+            className="group/back inline-flex items-center font-sans text-[0.8125rem] tracking-[0.01em] text-muted outline-none transition-colors duration-[240ms] ease-[var(--ease-exit)] hover:text-ember focus-visible:text-ember"
+          >
+            <span className="mr-2 transition-transform duration-[240ms] ease-[var(--ease-exit)] group-hover/back:-translate-x-1">
+              ←
+            </span>
+            {dict.artwork.back}
+          </Link>
+
+          <div className="mt-6 sm:mt-7">
+            <ArtworkViewer
+              artwork={artwork}
+              lang={lang}
+              title={title}
+              meta={meta}
+              prev={prev && { slug: prev.slug, title: resolveTitle(prev) }}
+              next={next && { slug: next.slug, title: resolveTitle(next) }}
+              labels={{ prev: dict.artwork.prev, next: dict.artwork.next }}
+            />
+          </div>
         </div>
-        <h1>{title}</h1>
-        <dl>
-          {artwork.technique && (
-            <>
-              <dt>{dict.artwork.technique}</dt>
-              <dd>{artwork.technique}</dd>
-            </>
-          )}
-          {artwork.dimensions && (
-            <>
-              <dt>{dict.artwork.dimensions}</dt>
-              <dd>{artwork.dimensions}</dd>
-            </>
-          )}
-          {artwork.year && (
-            <>
-              <dt>{dict.artwork.year}</dt>
-              <dd>{artwork.year}</dd>
-            </>
-          )}
-        </dl>
       </article>
     </PageTransition>
   );

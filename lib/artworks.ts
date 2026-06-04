@@ -228,6 +228,23 @@ export function getArtworkBySlug(slug: string): Artwork | undefined {
   return getAllArtworks().find((w) => w.slug === slug);
 }
 
+/**
+ * The works flanking a given slug in the global curated order — the same order
+ * the constellation gallery presents, so walking prev/next from the detail page
+ * is continuous with the wall the visitor just left (never category-scoped).
+ * Endpoints have an undefined neighbour; the detail page omits that control
+ * rather than pointing nowhere. The collection does not wrap.
+ */
+export function getArtworkNeighbors(slug: string): {
+  prev?: Artwork;
+  next?: Artwork;
+} {
+  const all = getAllArtworks();
+  const i = all.findIndex((w) => w.slug === slug);
+  if (i === -1) return {};
+  return { prev: all[i - 1], next: all[i + 1] };
+}
+
 export const CATEGORIES: Category[] = ["dipinti", "disegni", "opere-digitali"];
 
 /**

@@ -58,7 +58,11 @@
     "technique": "Tecnica",
     "dimensions": "Dimensioni",
     "year": "Anno",
-    "back": "Torna alle opere"
+    "category": "Serie",
+    "back": "Torna alle opere",
+    "prev": "Opera precedente",
+    "next": "Opera successiva",
+    "untitled": "Senza titolo"
   },
   "footer": {
     "rights": "Tutti i diritti riservati"

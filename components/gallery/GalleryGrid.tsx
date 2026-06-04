@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import type { Artwork } from "@/lib/artworks";
 import type { Locale } from "@/app/[lang]/dictionaries";
 import ArtworkCard, { type Tier } from "./ArtworkCard";
@@ -72,6 +72,11 @@ export default function GalleryGrid({
   lang: Locale;
 }) {
   const cols = useColumnCount();
+  // Spotlight: which work the cursor is on. When set, every other work recedes
+  // (dim + desaturate) so the focused piece holds the room.
+  const [hovered, setHovered] = useState<string | null>(null);
+  const enter = useCallback((slug: string) => setHovered(slug), []);
+  const leave = useCallback(() => setHovered(null), []);
 
   const columns = useMemo(() => {
     // Assign a deterministic tier/lean/offset per work first.
@@ -121,6 +126,10 @@ export default function GalleryGrid({
               lean={p.lean}
               offset={p.offset}
               priority={p.priority}
+              engaged={hovered !== null}
+              focused={hovered === p.artwork.slug}
+              onEnter={enter}
+              onLeave={leave}
             />
           ))}
         </div>
