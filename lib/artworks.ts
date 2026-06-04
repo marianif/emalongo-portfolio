@@ -1,6 +1,8 @@
 import "server-only";
 import fs from "node:fs";
 import path from "node:path";
+// Next bundles image-size; it reads only the file header, synchronously.
+import { imageSize } from "next/dist/compiled/image-size";
 import overrides from "@/data/artworks.json";
 
 /**
@@ -33,6 +35,12 @@ export interface Artwork {
   category: Category;
   /** Public path to the source image, e.g. "/artworks/dipinti/foo.png". */
   src: string;
+  /** Intrinsic pixel width of the source scan. */
+  width: number;
+  /** Intrinsic pixel height of the source scan. */
+  height: number;
+  /** width / height — the true aspect ratio, so images are never cropped. */
+  aspect: number;
   /** Manual sort weight (lower = earlier). Defaults to Infinity. */
   order: number;
   /** Featured on the home page. */
@@ -150,6 +158,21 @@ export function getAllArtworks(): Artwork[] {
       const parsed = parseStem(stem);
       const ov = (!slug.startsWith("_") && overrideMap[slug]) || {};
 
+      // Read intrinsic pixel dimensions from the file header (sync, cheap) so
+      // images keep their true ratio and never get cropped. Fall back to a
+      // portrait-ish default if the header can't be read.
+      let width = 1000;
+      let height = 1250;
+      try {
+        const dim = imageSize(fs.readFileSync(path.join(abs, file)));
+        if (dim.width && dim.height) {
+          width = dim.width;
+          height = dim.height;
+        }
+      } catch {
+        // keep defaults
+      }
+
       works.push({
         slug,
         title: ov.title ?? parsed.title,
@@ -159,6 +182,9 @@ export function getAllArtworks(): Artwork[] {
         year: ov.year ?? parsed.year,
         category,
         src: `/artworks/${dir}/${file}`,
+        width,
+        height,
+        aspect: width / height,
         order: ov.order ?? Number.POSITIVE_INFINITY,
         featured: ov.featured ?? false,
       });
@@ -203,3 +229,24 @@ export function getArtworkBySlug(slug: string): Artwork | undefined {
 }
 
 export const CATEGORIES: Category[] = ["dipinti", "disegni", "opere-digitali"];
+
+/**
+ * Curated artwork "faces" for the menu voices. We have no dedicated imagery for
+ * Biografia / Visione / Contatti, so each voice borrows a real work chosen for
+ * tone, not literal meaning — fitting for a symbolist. Swap these slugs as the
+ * collection grows or real section imagery arrives.
+ */
+const MENU_FACE_SLUGS: Record<string, string> = {
+  opere: "presenze-ancestrali-tecnica-mista-su-cartone-ruvido-cm77x56-2020",
+  bio: "cosmogonia-tecnica-mista-su-cartone-cm73x50-2014",
+  visione:
+    "visione-scadenza-interminabile-della-vita-tecnica-mista-su-cartone-ruvido-cm77x5",
+  contatti: "paesaggio-gotico-infestato-tecnica-mista-su-tela-cm70x50-2020",
+};
+
+/** Resolve the curated cover artwork for a given menu voice key. */
+export function getMenuFace(key: string): Artwork | undefined {
+  const slug = MENU_FACE_SLUGS[key];
+  if (!slug) return undefined;
+  return getArtworkBySlug(slug) ?? getHeroArtwork();
+}

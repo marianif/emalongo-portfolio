@@ -3,8 +3,16 @@ import { Besley, Hanken_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, hasLocale, LOCALES } from "./dictionaries";
+import {
+  CATEGORIES,
+  getAllArtworks,
+  getArtworksByCategory,
+  getMenuFace,
+} from "@/lib/artworks";
 import LenisProvider from "@/components/motion/LenisProvider";
+import Cursor from "@/components/motion/Cursor";
 import Nav from "@/components/layout/Nav";
+import type { MenuEntry } from "@/components/layout/MenuOverlay";
 import Footer from "@/components/layout/Footer";
 
 // The artist's voice: an inked slab serif (Clarendon lineage), not an airy
@@ -43,20 +51,84 @@ export default async function RootLayout({
 
   const dict = await getDictionary(lang);
 
+  // The Index entries: each voice borrows a curated artwork face. Opere carries
+  // a count · years meta line and nests the three bodies of work.
+  const totalWorks = getAllArtworks().length;
+  const yearsFor = (works: { year?: string }[]) => {
+    const ys = works
+      .flatMap((w) => (w.year ? w.year.split("-") : []))
+      .map((y) => parseInt(y, 10))
+      .filter((y) => !Number.isNaN(y));
+    return ys.length ? `${Math.min(...ys)}–${Math.max(...ys)}` : undefined;
+  };
+  const allYears = yearsFor(getAllArtworks());
+
+  const menuEntries: MenuEntry[] = [
+    {
+      key: "opere",
+      href: `/${lang}/opere`,
+      label: dict.nav.opere,
+      cover: getMenuFace("opere")?.src,
+      meta: `${totalWorks}${allYears ? ` · ${allYears}` : ""}`,
+      children: CATEGORIES.map((category) => {
+        const works = getArtworksByCategory(category);
+        return {
+          key: category,
+          href: `/${lang}/opere?categoria=${category}`,
+          label: dict.categories[category],
+          meta: String(works.length),
+        };
+      }),
+    },
+    {
+      key: "bio",
+      href: `/${lang}/bio`,
+      label: dict.nav.bio,
+      cover: getMenuFace("bio")?.src,
+    },
+    {
+      key: "visione",
+      href: `/${lang}/visione`,
+      label: dict.nav.visione,
+      cover: getMenuFace("visione")?.src,
+    },
+  ];
+
+  // Contatti lives inside the menu (no page of its own): an expandable row
+  // revealing email + Instagram, with its own curated cover behind it.
+  const contact = {
+    label: dict.nav.contatti,
+    cover: getMenuFace("contatti")?.src,
+    email: dict.menu.email,
+    emailLabel: dict.menu.emailLabel,
+    instagramHandle: dict.menu.instagramHandle,
+    instagramUrl: dict.menu.instagramUrl,
+    instagramLabel: dict.menu.instagramLabel,
+  };
+
   return (
     <html
       lang={lang}
       className={`${besley.variable} ${hanken.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-crypt">
+      {/* suppressHydrationWarning: browser extensions (ColorZilla, Grammarly,
+          etc.) inject attributes like cz-shortcut-listen onto <body> before
+          React hydrates, which otherwise trips a hydration mismatch and can
+          stop event handlers from attaching. */}
+      <body
+        className="min-h-full flex flex-col bg-crypt"
+        suppressHydrationWarning
+      >
         <LenisProvider>
-          <Nav lang={lang} labels={dict.nav} />
-          <main className="flex-1">{children}</main>
-          <Footer
+          <Cursor />
+          <Nav
             lang={lang}
-            rights={dict.footer.rights}
-            contattiLabel={dict.nav.contatti}
+            entries={menuEntries}
+            menuLabels={dict.menu}
+            contact={contact}
           />
+          <main className="flex-1">{children}</main>
+          <Footer rights={dict.footer.rights} email={dict.menu.email} />
         </LenisProvider>
       </body>
     </html>

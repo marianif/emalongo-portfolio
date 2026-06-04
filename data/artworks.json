@@ -54,5 +54,50 @@
     "year": "2024",
     "featured": true,
     "order": 5
+  },
+  "erosione-temporale-tecnica-mista-su-cartone-cm70x50-2011-2019": {
+    "title": "Erosione temporale",
+    "titleEn": "Temporal Erosion",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "70x50 cm",
+    "year": "2011-2019",
+    "featured": true,
+    "order": 6
+  },
+  "tesori-occultati-tecnica-mista-su-masonite-cm70x-50-2017-2018": {
+    "title": "Tesori occultati",
+    "titleEn": "Hidden Treasures",
+    "technique": "tecnica mista su masonite",
+    "dimensions": "70x50 cm",
+    "year": "2017-2018",
+    "featured": true,
+    "order": 7
+  },
+  "paesaggio-gotico-infestato-tecnica-mista-su-tela-cm70x50-2020": {
+    "title": "Paesaggio gotico infestato",
+    "titleEn": "Haunted Gothic Landscape",
+    "technique": "tecnica mista su tela",
+    "dimensions": "70x50 cm",
+    "year": "2020",
+    "featured": true,
+    "order": 8
+  },
+  "vertigine-delle-accumulazioni-tecnica-mista-su-cartone-cm318x237-2020": {
+    "title": "Vertigine delle accumulazioni",
+    "titleEn": "Vertigo of Accumulations",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "31,8x23,7 cm",
+    "year": "2020",
+    "featured": true,
+    "order": 9
+  },
+  "visione-gotica-tecnica-mista-su-tela-cm30x40-2018": {
+    "title": "Visione gotica",
+    "titleEn": "Gothic Vision",
+    "technique": "tecnica mista su tela",
+    "dimensions": "30x40 cm",
+    "year": "2018",
+    "featured": true,
+    "order": 10
   }
 }

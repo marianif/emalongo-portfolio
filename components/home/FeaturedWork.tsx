@@ -12,10 +12,20 @@ import type { Locale } from "@/app/[lang]/dictionaries";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+// Offset measures down an editorial column. Two tiers of size for rhythm; the
+// final width is aspect-corrected below so landscape works don't read as small.
+const SIZE = ["lg", "md", "lg", "md", "lg", "md", "lg", "md"] as const;
+const SHIFTS = ["0%", "18%", "6%", "24%", "3%", "16%", "9%", "20%"];
+
+// Cap on rendered image width per tier (px). Landscape works push toward these.
+const MAX_W = { lg: 880, md: 680 } as const;
+// Base column fraction per tier (a portrait reference); widened for landscape.
+const BASE_VW = { lg: 58, md: 44 } as const;
+
 /**
- * A single featured work: a tall framed image that drifts on scroll, with the
- * title (serif) and quiet metadata (sans) beside or beneath it. Hover lifts the
- * image tonally (no scale-pop, no shadow) per the Atmosphere-Not-Shadow rule.
+ * A featured work that materializes from the dark: a clip-path inset wipes open
+ * (top-down) while the image eases down from a slight zoom. Title + quiet meta
+ * settle in after. Hover clears the brightness. Reduced motion: fully present.
  */
 export default function FeaturedWork({
   artwork,
@@ -27,7 +37,9 @@ export default function FeaturedWork({
   index: number;
 }) {
   const root = useRef<HTMLDivElement>(null);
-  const imageWrap = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
+  const img = useRef<HTMLDivElement>(null);
+  const caption = useRef<HTMLDivElement>(null);
 
   const title =
     lang === "en" && artwork.titleEn ? artwork.titleEn : artwork.title;
@@ -37,68 +49,106 @@ export default function FeaturedWork({
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      // Slow intra-frame parallax: the image breathes inside its frame.
-      gsap.fromTo(
-        imageWrap.current,
-        { yPercent: -6 },
-        {
-          yPercent: 6,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      if (reduce) return;
+
+      // Cinematic unveil: mask wipes open + image releases from a zoom.
+      // toggleActions reverses the whole timeline when scrolling back up, so the
+      // work re-veils into the dark instead of staying revealed.
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: frame.current,
+          start: "top 82%",
+          toggleActions: "play none none reverse",
         },
-      );
+      });
+      tl.fromTo(
+        frame.current,
+        { clipPath: "inset(100% 0% 0% 0%)" },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 1.1,
+          ease: "expo.out",
+        },
+      )
+        .fromTo(
+          img.current,
+          { scale: 1.18 },
+          { scale: 1.0, duration: 1.4, ease: "expo.out" },
+          0,
+        )
+        .fromTo(
+          caption.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7, ease: "expo.out" },
+          0.35,
+        );
     },
     { scope: root },
   );
 
-  // Alternate alignment for asymmetric rhythm; vary measure by index.
   const alignRight = index % 2 === 1;
+  const tier = SIZE[index % SIZE.length];
+  const shift = SHIFTS[index % SHIFTS.length];
+
+  // Aspect correction: landscape works (aspect > 1) get extra width so their
+  // (shorter) height still reads large. Portrait works stay near the base.
+  const landscapeBoost = artwork.aspect > 1 ? Math.min(artwork.aspect, 1.5) : 1;
+  const widthVw = Math.min(BASE_VW[tier] * landscapeBoost, 92);
+  const maxW = Math.round(MAX_W[tier] * (artwork.aspect > 1 ? 1.15 : 1));
 
   return (
     <article
       ref={root}
-      className={`group flex flex-col ${
-        alignRight ? "items-end text-right" : "items-start text-left"
-      }`}
+      className="flex"
+      style={{
+        justifyContent: alignRight ? "flex-end" : "flex-start",
+      }}
     >
       <Link
         href={`/${lang}/opere/${artwork.slug}`}
-        className="block w-full max-w-[var(--w)] outline-none"
+        data-cursor="view"
+        className="group block outline-none"
         style={
           {
-            // Varied widths break the uniform-grid reflex.
-            "--w": index % 3 === 0 ? "100%" : index % 3 === 1 ? "62%" : "78%",
+            width: `min(${widthVw}vw, ${maxW}px)`,
+            marginLeft: alignRight ? undefined : `min(${shift}, 18vw)`,
+            marginRight: alignRight ? `min(${shift}, 18vw)` : undefined,
+            textAlign: alignRight ? "right" : "left",
           } as React.CSSProperties
         }
       >
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-crypt-raise">
-          <div ref={imageWrap} className="absolute inset-[-6%]">
+        <div
+          ref={frame}
+          className="relative w-full overflow-hidden bg-crypt-raise will-change-[clip-path]"
+          style={{ aspectRatio: artwork.aspect }}
+        >
+          {/* Scale wrapper for the zoom-out; image keeps true ratio (no crop). */}
+          <div
+            ref={img}
+            className="absolute inset-0 will-change-transform"
+          >
             <Image
-              src={getImageSrc(artwork.src, { width: 1400 })}
-              alt={`${title} — ${meta}`}
+              src={getImageSrc(artwork.src, { width: 1200 })}
+              alt={`${title}${meta ? ` — ${meta}` : ""}`}
               fill
-              sizes="(max-width: 768px) 100vw, 70vw"
-              className="object-cover transition-[filter,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [filter:brightness(0.82)] group-hover:[filter:brightness(1)] group-focus-visible:[filter:brightness(1)]"
+              sizes="(max-width: 768px) 90vw, 45vw"
+              className="object-contain transition-[filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [filter:brightness(0.82)] group-hover:[filter:brightness(1.02)] group-focus-visible:[filter:brightness(1.02)]"
             />
           </div>
-          {/* Hairline frame; ember edge on hover/focus (scarce accent). */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 border border-rule/40 transition-colors duration-500 group-hover:border-accent/60 group-focus-visible:border-accent"
+            className="pointer-events-none absolute inset-0 border border-rule/30 transition-colors duration-500 group-hover:border-accent/60 group-focus-visible:border-accent"
           />
         </div>
-        <div className="mt-4">
-          <h3 className="font-serif text-[clamp(1.15rem,2vw,1.6rem)] leading-tight text-bone">
+        <div ref={caption} className="mt-3">
+          <h3 className="font-serif text-[clamp(1rem,1.6vw,1.4rem)] leading-tight text-bone">
             {title}
           </h3>
           {meta && (
-            <p className="mt-1 font-sans text-[0.8125rem] text-muted lowercase">
+            <p className="mt-1 font-sans text-[0.75rem] text-muted lowercase">
               {meta}
             </p>
           )}

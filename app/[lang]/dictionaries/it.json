@@ -11,6 +11,11 @@
     "disegni": "Disegni",
     "opere-digitali": "Opere digitali"
   },
+  "categoryDesc": {
+    "dipinti": "Tecnica mista su cartone e tela. Il corpo principale della ricerca.",
+    "disegni": "Penna e tecnica mista su carta. Studi e visioni dirette.",
+    "opere-digitali": "Composizioni digitali. Disintegrazioni, metamorfosi, paesaggi cronici."
+  },
   "home": {
     "tagline": "Espressionismo visionario",
     "intro": "Aspetti simbolici nella pittura.",
@@ -19,15 +24,29 @@
     "fragments": [
       "Dare forma agli elementi immaginali che rimangono nel substrato profondo del divenire temporale.",
       "Forme simboliche in perenne trasmutazione, sogni o incubi di significato oscuro ma rilevante.",
+      "Paesaggi immaginari pieni di elementi architettonici elementari, atemporali, scheletri da un passato psichico perduto.",
+      "Segni permasti indelebilmente dopo diverse cancellature e riscritture, non collocabili in un tempo definito.",
       "Il fare creativo diventa lasciar fluire e registrare, non deliberare nulla al di fuori di quello che viene richiesto dall'immagine stessa."
     ],
     "excerpt": "Sono per un'arte che nasce dal sangue, dal fuoco, e che si origina come una necessità viscerale, non come operazione fredda e falsamente filosofica.",
     "excerptAttribution": "dalla tesi «Espressionismo visionario»",
-    "readVisione": "Leggi la visione",
+    "readVisione": "Leggi il manifesto",
     "worksTitle": "Opere scelte",
     "worksLead": "Una selezione, dai dipinti ai disegni alle opere digitali.",
     "bodiesTitle": "Corpi di lavoro",
     "enterWorks": "Entra nelle opere"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Chiudi",
+    "label": "Indice",
+    "tagline": "Espressionismo visionario",
+    "contactTitle": "Contatti",
+    "emailLabel": "Email",
+    "email": "info@emanuelelongo.com",
+    "instagramLabel": "Instagram",
+    "instagramHandle": "@emanuele.longo",
+    "instagramUrl": "https://instagram.com/emanuele.longo"
   },
   "opere": {
     "title": "Opere",

@@ -22,12 +22,26 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const featured = getFeaturedRest();
   const fragments = dict.home.fragments;
 
-  // One representative cover per body of work for the gateways.
-  const gateways = CATEGORIES.map((category) => ({
-    category,
-    label: dict.categories[category],
-    cover: getArtworksByCategory(category)[0],
-  }));
+  // Per body of work: cover, count, an evocative line, and a years span.
+  const gateways = CATEGORIES.map((category) => {
+    const works = getArtworksByCategory(category);
+    const years = works
+      .flatMap((w) => (w.year ? w.year.split("-") : []))
+      .map((y) => parseInt(y, 10))
+      .filter((y) => !Number.isNaN(y));
+    const span =
+      years.length > 0
+        ? `${Math.min(...years)}–${Math.max(...years)}`
+        : undefined;
+    return {
+      category,
+      label: dict.categories[category],
+      description: dict.categoryDesc[category],
+      cover: works[0],
+      count: works.length,
+      years: span,
+    };
+  });
 
   const heroTitle =
     hero && lang === "en" && hero.titleEn ? hero.titleEn : hero?.title;
@@ -56,16 +70,20 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           </p>
         </div>
 
-        <div className="flex flex-col gap-[clamp(4rem,10vh,8rem)]">
-          {featured.map((work, i) => (
-            <div key={work.slug}>
-              <FeaturedWork artwork={work} lang={lang} index={i} />
-              {/* Thread a fragment after the 1st and 3rd works. */}
-              {(i === 0 || i === 2) && fragments[i === 0 ? 0 : 1] && (
-                <VoiceFragment text={fragments[i === 0 ? 0 : 1]} />
-              )}
-            </div>
-          ))}
+        <div className="flex flex-col gap-[clamp(3rem,8vh,6rem)]">
+          {featured.map((work, i) => {
+            // Thread a fragment roughly every 2 works, cycling the voice lines.
+            const fragmentIndex = Math.floor(i / 2);
+            const showFragment = i % 2 === 1 && fragmentIndex < fragments.length;
+            return (
+              <div key={work.slug}>
+                <FeaturedWork artwork={work} lang={lang} index={i} />
+                {showFragment && (
+                  <VoiceFragment text={fragments[fragmentIndex]} />
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -78,15 +96,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       />
 
       {/* A last fragment back in the crypt before the gateways. */}
-      {fragments[2] && (
+      {fragments.length > 0 && (
         <div className="bg-crypt px-6">
-          <VoiceFragment text={fragments[2]} />
+          <VoiceFragment text={fragments[fragments.length - 1]} />
         </div>
       )}
 
       <BodiesOfWork
         title={dict.home.bodiesTitle}
         gateways={gateways}
+        enterLabel={dict.home.enterWorks}
         lang={lang}
       />
     </PageTransition>

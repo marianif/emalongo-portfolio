@@ -44,7 +44,11 @@ export default function Reveal({
           delay,
           duration,
           ease: "expo.out",
-          scrollTrigger: { trigger: el, start: "top 88%" },
+          scrollTrigger: {
+            trigger: el,
+            start: "top 88%",
+            toggleActions: "play none none reverse",
+          },
         },
       );
     },

@@ -102,6 +102,20 @@ h3 {
   color: var(--crypt-bone);
 }
 
+/* When the blend-mode cursor is active, hide the native one (it returns on
+   touch / reduced-motion, where the custom cursor never mounts). Keep the
+   text caret usable on inputs. */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [data-cursor] {
+  cursor: none;
+}
+.has-custom-cursor input,
+.has-custom-cursor textarea {
+  cursor: text;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
