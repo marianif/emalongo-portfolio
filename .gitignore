@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+
+# heavy files like artist works
+/public/artworks
+
 # testing
 /coverage
 

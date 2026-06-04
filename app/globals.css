@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+/*
+  Emanuele Longo — "The Catalogue and the Crypt"
+  Two grounds: the crypt (warm near-black galleries) and the catalogue
+  (warm bone paper for reading). One scarce ember accent.
+  No pure #000 / #fff anywhere — every neutral tints warm (umber / bone).
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Crypt: dark world (galleries, imagery) --- */
+  --crypt-soot: #14110d; /* warm bistre near-black — gallery ground */
+  --crypt-soot-deep: #0d0b08; /* deeper pool, vignettes, footer */
+  --crypt-raise: #1d1812; /* faintly raised dark surface */
+  --crypt-bone: #ece4d6; /* warm off-white — primary text on dark */
+  --crypt-ash: #8a8073; /* low-contrast warm grey — meta / dividers */
+  --crypt-ash-dim: #5b5347; /* dimmer ash — hairlines, decorative */
+
+  /* --- Catalogue: light world (bio, statement) --- */
+  --cat-paper: #ece3d2; /* warm bone paper — editorial ground */
+  --cat-paper-raise: #f3ecdd; /* lifted paper panel */
+  --cat-ink: #221d16; /* warm near-black ink — body text */
+  --cat-ink-soft: #4f463a; /* secondary ink — captions */
+  --cat-rule: #cabfa8; /* paper-toned hairline / divider */
+
+  /* --- Ember: the one accent (scarce, ≤5% of any screen) --- */
+  --ember: #9a3322; /* muted oxblood — active / live / available */
+  --ember-bright: #c0492f; /* hover lift only */
+
+  /* --- Semantic defaults: site opens in the crypt --- */
+  --background: var(--crypt-soot);
+  --foreground: var(--crypt-bone);
+  --muted: var(--crypt-ash);
+  --rule: var(--crypt-ash-dim);
+  --accent: var(--ember);
+}
+
+/*
+  Catalogue scope: opt a section/page INTO the light world by adding
+  `data-ground="catalogue"`. Theme is a scoped attribute, never an inline
+  ternary. The crypt is the default; the catalogue is the deliberate exception.
+*/
+[data-ground="catalogue"] {
+  --background: var(--cat-paper);
+  --foreground: var(--cat-ink);
+  --muted: var(--cat-ink-soft);
+  --rule: var(--cat-rule);
+  --accent: var(--ember);
 }
 
 @theme inline {
+  /* Color roles (semantic; resolve per ground) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Raw palette (for deliberate cross-ground use) */
+  --color-crypt: var(--crypt-soot);
+  --color-crypt-deep: var(--crypt-soot-deep);
+  --color-crypt-raise: var(--crypt-raise);
+  --color-bone: var(--crypt-bone);
+  --color-paper: var(--cat-paper);
+  --color-ink: var(--cat-ink);
+  --color-ember: var(--ember);
+  --color-ember-bright: var(--ember-bright);
+
+  /* Type families (wired to next/font CSS variables in layout) */
+  --font-serif: var(--font-besley); /* the artist's voice */
+  --font-sans: var(--font-hanken); /* institutional chrome */
+
+  /* Motion: deliberate, exponential ease-out. Reserve drama for signatures. */
+  --ease-exit: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick: 240ms;
+  --dur-slow: 720ms;
+  --dur-veil: 1200ms; /* signature reveals (hero, gallery entrance) */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  /* Light type on dark ground reads lighter; give it air. */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The serif carries the artist's voice: titles, the name, the statement. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--crypt-bone);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "home": "Home",
+    "opere": "Opere",
+    "bio": "Biografia",
+    "visione": "Visione",
+    "contatti": "Contatti"
+  },
+  "categories": {
+    "dipinti": "Dipinti",
+    "disegni": "Disegni",
+    "opere-digitali": "Opere digitali"
+  },
+  "home": {
+    "tagline": "Espressionismo visionario",
+    "intro": "Aspetti simbolici nella pittura.",
+    "scrollCue": "Scorri",
+    "heroRole": "Pittore",
+    "fragments": [
+      "Dare forma agli elementi immaginali che rimangono nel substrato profondo del divenire temporale.",
+      "Forme simboliche in perenne trasmutazione, sogni o incubi di significato oscuro ma rilevante.",
+      "Il fare creativo diventa lasciar fluire e registrare, non deliberare nulla al di fuori di quello che viene richiesto dall'immagine stessa."
+    ],
+    "excerpt": "Sono per un'arte che nasce dal sangue, dal fuoco, e che si origina come una necessità viscerale, non come operazione fredda e falsamente filosofica.",
+    "excerptAttribution": "dalla tesi «Espressionismo visionario»",
+    "readVisione": "Leggi la visione",
+    "worksTitle": "Opere scelte",
+    "worksLead": "Una selezione, dai dipinti ai disegni alle opere digitali.",
+    "bodiesTitle": "Corpi di lavoro",
+    "enterWorks": "Entra nelle opere"
+  },
+  "opere": {
+    "title": "Opere",
+    "all": "Tutte"
+  },
+  "artwork": {
+    "technique": "Tecnica",
+    "dimensions": "Dimensioni",
+    "year": "Anno",
+    "back": "Torna alle opere"
+  },
+  "footer": {
+    "rights": "Tutti i diritti riservati"
+  }
+}

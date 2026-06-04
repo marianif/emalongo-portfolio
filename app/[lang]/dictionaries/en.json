@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "home": "Home",
+    "opere": "Works",
+    "bio": "Biography",
+    "visione": "Vision",
+    "contatti": "Contact"
+  },
+  "categories": {
+    "dipinti": "Paintings",
+    "disegni": "Drawings",
+    "opere-digitali": "Digital works"
+  },
+  "home": {
+    "tagline": "Visionary Expressionism",
+    "intro": "Symbolic aspects in painting.",
+    "scrollCue": "Scroll",
+    "heroRole": "Painter",
+    "fragments": [
+      "To give form to the imaginal elements that persist in the deep substratum of temporal becoming.",
+      "Symbolic forms in perpetual transmutation, dreams or nightmares of obscure yet vital meaning.",
+      "Creation becomes letting it flow and recording it, deciding nothing beyond what the image itself demands."
+    ],
+    "excerpt": "I am for an art born of blood and fire, arising as a visceral necessity, not as a cold and falsely philosophical operation.",
+    "excerptAttribution": "from the thesis \"Visionary Expressionism\"",
+    "readVisione": "Read the vision",
+    "worksTitle": "Selected works",
+    "worksLead": "A selection, from paintings to drawings to digital works.",
+    "bodiesTitle": "Bodies of work",
+    "enterWorks": "Enter the works"
+  },
+  "opere": {
+    "title": "Works",
+    "all": "All"
+  },
+  "artwork": {
+    "technique": "Technique",
+    "dimensions": "Dimensions",
+    "year": "Year",
+    "back": "Back to works"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}

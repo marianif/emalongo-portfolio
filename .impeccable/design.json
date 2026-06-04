@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-04T00:00:00.000Z",
+  "title": "Design System: Emanuele Longo",
+  "extensions": {
+    "colorMeta": {
+      "ember": {
+        "role": "primary",
+        "displayName": "Ember / Oxblood",
+        "canonical": "#9a3322",
+        "tonalRamp": ["#2a0e08", "#46160d", "#651f12", "#822818", "#9a3322", "#b3402b", "#c66a55", "#e0a596"]
+      },
+      "crypt-soot": {
+        "role": "neutral",
+        "displayName": "Soot / Bistre Black",
+        "canonical": "#14110d",
+        "tonalRamp": ["#0d0b08", "#14110d", "#1d1812", "#2a241b", "#3a3226", "#5b5347", "#8a8073", "#b8ad9b"]
+      },
+      "crypt-bone": {
+        "role": "neutral",
+        "displayName": "Bone (on dark)",
+        "canonical": "#ece4d6",
+        "tonalRamp": ["#3a3226", "#5b5347", "#8a8073", "#b8ad9b", "#d4c9b7", "#ece4d6", "#f3ecdd", "#faf6ee"]
+      },
+      "cat-paper": {
+        "role": "neutral",
+        "displayName": "Bone Paper",
+        "canonical": "#ece3d2",
+        "tonalRamp": ["#4f463a", "#6e6452", "#9a8f78", "#cabfa8", "#ddd2bd", "#ece3d2", "#f3ecdd", "#f8f3e8"]
+      },
+      "cat-ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#221d16",
+        "tonalRamp": ["#15110c", "#221d16", "#332b20", "#4f463a", "#6e6452", "#9a8f78", "#cabfa8", "#ece3d2"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Artist name, statement opening lines, gallery section titles. Besley, the inked voice." },
+      "headline": { "displayName": "Headline", "purpose": "Page and body-of-work titles. Besley." },
+      "title": { "displayName": "Title", "purpose": "Artwork titles. Besley." },
+      "body": { "displayName": "Body", "purpose": "Bio and statement prose. Hanken Grotesk, max ~66ch." },
+      "label": { "displayName": "Label / Meta", "purpose": "Nav, language toggle, artwork metadata. Hanken Grotesk, never all-caps tracked." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-exit", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default exponential ease-out for all state transitions and reveals." },
+      { "name": "dur-quick", "value": "240ms", "purpose": "Hover and small state changes." },
+      { "name": "dur-slow", "value": "720ms", "purpose": "Scroll reveals and section transitions." },
+      { "name": "dur-veil", "value": "1200ms", "purpose": "Signature moments only: hero reveal, gallery entrance, crypt to catalogue transition." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Primary nav link on the crypt ground. Color shift is the state; no underline at rest.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">Opere</a> <a class=\"ds-nav-link ds-nav-link--active\" href=\"#\">Bio</a>",
+      "css": ".ds-nav-link { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.01em; color: #ece4d6; text-decoration: none; transition: color 240ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-nav-link:hover { color: #faf6ee; } .ds-nav-link:focus-visible { outline: 1px solid #9a3322; outline-offset: 4px; } .ds-nav-link--active { color: #9a3322; }"
+    },
+    {
+      "name": "Language Toggle",
+      "kind": "custom",
+      "refersTo": "language-toggle",
+      "description": "Two-state IT / EN control. Active language is ember, inactive is ash. A sanctioned use of the scarce accent.",
+      "html": "<div class=\"ds-lang\"><button class=\"ds-lang__opt ds-lang__opt--active\">IT</button><span class=\"ds-lang__sep\">/</span><button class=\"ds-lang__opt\">EN</button></div>",
+      "css": ".ds-lang { display: inline-flex; align-items: center; gap: 6px; font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 500; } .ds-lang__opt { background: none; border: none; padding: 8px 4px; cursor: pointer; color: #8a8073; transition: color 240ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-lang__opt:hover { color: #ece4d6; } .ds-lang__opt--active { color: #9a3322; } .ds-lang__sep { color: #5b5347; }"
+    },
+    {
+      "name": "Artwork Title + Meta",
+      "kind": "custom",
+      "refersTo": "artwork-meta",
+      "description": "Artwork title in the Besley voice, with quiet ash metadata beneath. The title leads, the data recedes.",
+      "html": "<figure class=\"ds-art\"><h3 class=\"ds-art__title\">Assedio temporale</h3><p class=\"ds-art__meta\">tecnica mista su cartone, 70x50 cm, 2020</p></figure>",
+      "css": ".ds-art { margin: 0; } .ds-art__title { font-family: 'Besley', Georgia, serif; font-size: 1.25rem; font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; color: #ece4d6; margin: 0 0 4px; } .ds-art__meta { font-family: 'Hanken Grotesk', system-ui, sans-serif; font-size: 0.8125rem; font-weight: 500; color: #8a8073; margin: 0; }"
+    },
+    {
+      "name": "Display Heading",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "The artist's voice at scale: name and statement openings. Besley, inked and physical.",
+      "html": "<h1 class=\"ds-display\">Emanuele Longo</h1>",
+      "css": ".ds-display { font-family: 'Besley', Georgia, serif; font-size: clamp(2.75rem, 7vw, 6rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.01em; color: #ece4d6; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Catalogue and the Crypt",
+    "overview": "Two worlds, one binding. The galleries are a crypt: a warm bistre near-black where the paintings glow off the wall like objects lit in a closed room after hours. The reading surfaces are the catalogue: a warm bone-paper ground with an inked slab serif, the printed monograph that accompanies the exhibition. Moving between the two, out of the dark room to read and back in to look, is the experience. The voice is Besley, a slab serif chosen deliberately against the airy editorial text-serifs that have become the reflex for art sites; it reads like printed wood-type, not a fashion magazine. The chrome is Hanken Grotesk, a quiet grotesque that disappears into the role of a gallery label. There is no monospace, on purpose: mono plus display-serif is the editorial-typographic fingerprint this system refuses.",
+    "keyCharacteristics": [
+      "Dark/light duality: crypt-dark galleries, catalogue-light editorial pages.",
+      "Warm-tinted blacks and bone whites; never pure #000 or #fff.",
+      "An inked slab serif (voice) against a quiet grotesque (chrome). No mono.",
+      "Zero corner rounding; depth from value and atmosphere, never shadows.",
+      "Motion deliberate by default, fully immersive only in signature moments.",
+      "Imagery leads every screen; chrome stays quiet so the art can be loud."
+    ],
+    "rules": [
+      { "name": "The Two-Worlds Rule", "body": "Galleries and imagery live in the crypt (dark); long-form reading lives in the catalogue (light). The ground is set by the data-ground attribute at a section or page boundary, never by an inline ternary, and the two grounds never mix within one content zone.", "section": "colors" },
+      { "name": "The Ember Scarcity Rule", "body": "The accent appears on ≤5% of any screen. Its rarity is the meaning: when it shows, something is active, live, or available.", "section": "colors" },
+      { "name": "The No-Pure-Black/White Rule", "body": "#000000 and #ffffff are forbidden. Every neutral tints warm toward umber or bone, to agree with the warm-toned work.", "section": "colors" },
+      { "name": "The Voice/Label Rule", "body": "Besley is the artist's voice (titles, name, statement). Hanken is the institution's label (nav, metadata, UI). Never use the serif for chrome or the sans for the artist's words.", "section": "typography" },
+      { "name": "The No-Mono Rule", "body": "Metadata never goes in a monospace. Mono plus display-serif is the editorial-typographic reflex; this system refuses it on purpose.", "section": "typography" },
+      { "name": "The Atmosphere-Not-Shadow Rule", "body": "Depth is conveyed by light, value, and slow motion, never by a crisp drop shadow under a card. If a surface must lift, the ground around it darkens; it does not cast a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do tint every neutral warm: soot/bistre blacks, bone/cream whites.",
+      "Do keep the ember accent below ~5% of any screen; let its rarity mean active / live / available.",
+      "Do lead every screen with imagery; words support, never precede.",
+      "Do use Besley for the artist's voice and Hanken Grotesk for institutional chrome.",
+      "Do set the light/dark ground with data-ground at a section boundary, and make the crypt to catalogue transition deliberate and felt.",
+      "Do keep corner radius at 0 and convey depth with value and slow motion.",
+      "Do make motion slow and purposeful; reserve full immersion for signature moments and honor prefers-reduced-motion fully."
+    ],
+    "donts": [
+      "Don't ship the sterile white-cube default: stark white background, tiny uniform thumbnails in a rigid grid, zero atmosphere.",
+      "Don't ship the generic SaaS/template look: centered hero with tagline and two buttons, feature-card grids, rounded-everything, gradient CTAs.",
+      "Don't ship Instagram-feed flatness: endless equal-weight images with no curation or narrative.",
+      "Don't add effect-for-its-own-sake spectacle that upstages the imagery.",
+      "Don't use pure #000000 or #ffffff anywhere.",
+      "Don't put metadata in a monospace, or pair display-serif + mono-label + ruled columns.",
+      "Don't let the ember become decorative or repeated; it is not a brand color to sprinkle.",
+      "Don't mix the dark and light grounds within a single content zone."
+    ]
+  }
+}

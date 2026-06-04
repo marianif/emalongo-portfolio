@@ -1,0 +1,48 @@
+“Il principio di Ermes raccomanda l’uso del simbolo: abbiamo una fonte ma cifrata, criptica, enigmatica.”
+Pierre Riffard, L’esoterismo
+Uno degli scopi principali dell&#39;arte, nella mia visione, oltre il rispondere a bisogni soggettivi dell’artista, è
+smuovere e riaccendere il sentire collettivo; nella trasfigurazione simbolica delle ferite aperte nell&#39;anima
+creatrice, dando forma alle immagini in lei presenti, in relazione con se stessa, col proprio tempo e col
+mondo. E&#39; urgente nel momento attuale, come lo è stato in ogni epoca della storia in cui si è testimoni non
+solo passivi, dare forma agli elementi immaginali che rimangono nel substrato profondo del divenire
+temporale, nel loro perdurare o trasmutare nel corso della storia: tali forme simboliche, in perenne
+trasmutazione, possono ancora smuovere sensazioni ed emozioni vivide, commuovere chi è interiormente
+desto e tentare di penetrare nei ‘sonni’ di molti altri, come sogni o incubi di significato oscuro ma rilevante,
+come presentimenti. Esse possono infatti, a mio parere, presentire nell’immaginario gli ulteriori sviluppi,
+dalla propria visuale sulla scena, del dramma concreto che si svolge sempre più accelerato nel “gran teatro
+del ‘mondo che va in frantumi’”, sia quello che emerge un dramma intimo, interpersonale, collettivo,
+universale (o tutti assieme).
+E&#39; urgente, secondo me, nella ricerca artistica, il tornare a dare valore primario alla sensibilità interiore, alla
+portata simbolica e metafisica delle immagini (che è sempre stata presente in tutta la grande arte di tutti i
+tempi) , e all’azione creativa dell&#39;immaginazione, attraverso un&#39; immersione nell’immaginario personale e
+collettivo che corrisponde in profondità con la realtà dell&#39;anima individuale, del suo stato emotivo, e,
+attraverso di essa, con quella dell&#39; ’Anima Mundi’.
+Chi crea esplorando il proprio tempo interiore, senza perdere sensibilità per quello sociale e storico in cui è
+di passaggio, si può venir a trovare più o meno consapevolmente disperso in un labirinto di figure e forme
+ambigue, segni permasti indelebilmente dopo diverse cancellature e riscritture non collocabili in un tempo
+definito, tracciati pervenuti da un ammasso caotico che rimanda a tempi remoti, a eventi interiori
+primordiali, come a futuri ritorni a condizioni simili a quelle ancestrali; in bilico tra figurazioni e sintesi
+schematiche, scenari, paesaggi immaginari pieni di elementi architettonici elementari, atemporali, scheletri
+da un passato (o futuro) psichico perduto, presagimenti, tentativi abbandonati di edificazioni, frammenti di
+costruzioni grandiose o squallide, di loro certe distruzioni future; trasfigurazioni di ricordi, eventi, incidenti,
+esperienze personali e assieme rimandi all’immaginario collettivo dal tempo in corso, introdotti
+sincronicamente, autonomamente e inconsciamente, nel primo e diretto approccio creativo.
+Il fare creativo diventa lasciar fluire e registrare tutto questo, non deliberare nulla al di fuori di quello che
+viene richiesto dall’immagine stessa, nel suo prender forma, dall’immaginario che affiora in essa
+autonomamente, a partire da una prima originaria immagine ideativa, che raccoglie tensioni, sensazioni,
+suggestioni fortemente attrattive, pathos.
+La simbolicità non può che rimandare, in quest’epoca più che mai, ad una parte interiore di cui si
+percepisce la mancanza o lo sprofondamento totale su un orizzonte sterminato; perduta, rimossa,
+ottenebrata, la si evoca e richiama inconsciamente, nel torrente sotterraneo, non ritrovando i pezzi
+combacianti nell’invisibile, tra i molti frammenti dispersi. Sono per un&#39;arte che nasce dal sangue, dal fuoco
+e che si origina come una necessità viscerale, non come operazione fredda e falsamente filosofica.
+La creatività autentica, l&#39;istanza visionaria e simbolica, nell&#39;arte hanno di nuovo da esser portate in primo
+piano; senza la pretesa di esser &#39;nuovi&#39; e &#39;originali&#39;, bisogna lasciare cadere i miti progressisti e futuristi,
+lasciare le illusioni a chi si vuole (ancora) illudere; lasciar cadere l&#39;illusione del valore del nuovo a tutti i
+costi, non aver paura di passare per anacronistici e reazionari, la reazione è più che mai necessaria oggi a
+livello artistico; non temere le discese negli inferi psichici, riscoprire il valore intramontabile
+dell&#39;immaginazione, dell&#39;immaginario archetipico, e l&#39;efficacia dell&#39;espressività simbolica dei mezzi artistici
+tradizionali, oltre che di mezzi nuovi utilizzabili per dare forma alle immagini.
+Le esigenze e le modalità dell&#39;espressionismo non sono mai morte e avranno molto ancora da dare in
+futuro, modificandosi con nuove tecniche e stili ibridati; i sincretismi potranno portare nuova linfa vitale
+all&#39;Arte.

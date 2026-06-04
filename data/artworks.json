@@ -1,0 +1,58 @@
+{
+  "_comment": "Per-slug overrides merged on top of filename-parsed metadata. Keyed by the generated slug. Add only fields you want to correct: title, titleEn, technique, dimensions, year, order (lower = earlier), featured (boolean). The `home-hero` order=0 work is the home page hero; featured works are ordered by `order`.",
+
+  "presenze-ancestrali-tecnica-mista-su-cartone-ruvido-cm77x56-2020": {
+    "title": "Presenze ancestrali",
+    "titleEn": "Ancestral Presences",
+    "technique": "tecnica mista su cartone ruvido",
+    "dimensions": "77x56 cm",
+    "year": "2020",
+    "featured": true,
+    "order": 0
+  },
+  "assedio-temporale-infestazioneuragano-tecnica-mista-su-cartone-cm70x50-2020": {
+    "title": "Assedio temporale. Infestazione. Uragano",
+    "titleEn": "Temporal Siege. Infestation. Hurricane",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "70x50 cm",
+    "year": "2020",
+    "featured": true,
+    "order": 1
+  },
+  "visione-scadenza-interminabile-della-vita-tecnica-mista-su-cartone-ruvido-cm77x5": {
+    "title": "Visione. Scadenza interminabile della Vita",
+    "titleEn": "Vision. Interminable Expiry of Life",
+    "technique": "tecnica mista su cartone ruvido",
+    "dimensions": "77x56 cm",
+    "year": "2020",
+    "featured": true,
+    "order": 2
+  },
+  "cosmogonia-tecnica-mista-su-cartone-cm73x50-2014": {
+    "title": "Cosmogonia",
+    "titleEn": "Cosmogony",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "73x50 cm",
+    "year": "2014",
+    "featured": true,
+    "order": 3
+  },
+  "paesaggio-spettrale-cronografia-valle-dei-templi-tecnica-mista-su-tela-cm50x40-2": {
+    "title": "Paesaggio spettrale. Cronografia. Valle dei Templi",
+    "titleEn": "Spectral Landscape. Chronography. Valley of the Temples",
+    "technique": "tecnica mista su tela",
+    "dimensions": "50x40 cm",
+    "year": "2019",
+    "featured": true,
+    "order": 4
+  },
+  "visione-conflitto-tecnica-mista-su-cartone-cm70x50-2024": {
+    "title": "Visione. Conflitto",
+    "titleEn": "Vision. Conflict",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "70x50 cm",
+    "year": "2024",
+    "featured": true,
+    "order": 5
+  }
+}
