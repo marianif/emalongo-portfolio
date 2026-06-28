@@ -46,7 +46,8 @@ export default function MenuOverlay({
   entries,
   labels,
   contact,
-  isCatalogue,
+  open,
+  onOpenChange,
 }: {
   lang: Locale;
   entries: MenuEntry[];
@@ -58,9 +59,11 @@ export default function MenuOverlay({
     contactTitle: string;
   };
   contact: MenuContact;
-  isCatalogue?: boolean;
+  /** Controlled by Nav: the trigger button lives there (in the blend chrome). */
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const setOpen = onOpenChange;
   const [active, setActive] = useState<string | null>(null);
   const pathname = usePathname();
   const overlay = useRef<HTMLDivElement>(null);
@@ -134,22 +137,9 @@ export default function MenuOverlay({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        data-cursor="view"
-        aria-expanded={open}
-        className="group flex items-center gap-2.5 font-sans text-[0.8125rem] tracking-[0.06em] text-foreground uppercase transition-colors hover:text-accent"
-      >
-        <span aria-hidden className="flex h-3 w-5 flex-col justify-between">
-          <span className="h-px w-full bg-current" />
-          <span className="h-px w-full bg-current transition-transform duration-300 group-hover:translate-x-1" />
-        </span>
-        {labels.open}
-      </button>
-
       {/* Overlay. Mounted always; shown/hidden + click-through via React state,
-          so closing is deterministic regardless of in-flight animations. */}
+          so closing is deterministic regardless of in-flight animations.
+          The trigger button lives in Nav (the mix-blend chrome). */}
       <div
         ref={overlay}
         role="dialog"

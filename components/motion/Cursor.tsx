@@ -94,7 +94,7 @@ export default function Cursor() {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed top-0 left-0 z-[100] h-6 w-6 rounded-full bg-bone opacity-0 mix-blend-difference will-change-transform"
+      className="pointer-events-none fixed top-0 left-0 z-[200] h-6 w-6 rounded-full bg-bone opacity-0 mix-blend-difference will-change-transform"
       style={{ transition: "opacity 300ms ease" }}
     />
   );
