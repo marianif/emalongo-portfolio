@@ -1,23 +1,29 @@
 import { notFound } from "next/navigation";
 import { hasLocale } from "../dictionaries";
-import { getContent } from "@/lib/content";
+import { getBio } from "@/lib/content";
 import PageTransition from "@/components/motion/PageTransition";
+import BioPageClient from "@/components/bio/BioPageClient";
 
 export default async function BioPage({ params }: PageProps<"/[lang]/bio">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const markdown = getContent("bio", lang);
+
+  const { heading, paragraphs } = getBio(lang);
 
   return (
     <PageTransition>
-      {/* Bio is long-form reading: opt into the catalogue (light) ground. */}
-      <article
-        data-ground="catalogue"
-        className="min-h-screen bg-background pt-24 text-foreground sm:pt-28"
-      >
-        {/* Raw markdown — a renderer will be wired when crafting the screen. */}
-        <pre className="whitespace-pre-wrap p-6 font-sans">{markdown}</pre>
-      </article>
+      {/*
+        The catalogue page: a black-and-white portrait leads as a hero that
+        dissolves into the bone-paper ground, then the short biography reads as a
+        single inked column. The artist statement is not here — it lives, in full,
+        on /visione. Catalogue (light) ground throughout.
+      */}
+      <BioPageClient
+        lang={lang}
+        label={heading}
+        name="Emanuele Longo"
+        paragraphs={paragraphs}
+      />
     </PageTransition>
   );
 }

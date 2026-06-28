@@ -46,6 +46,7 @@ export default function MenuOverlay({
   entries,
   labels,
   contact,
+  isCatalogue,
 }: {
   lang: Locale;
   entries: MenuEntry[];
@@ -57,6 +58,7 @@ export default function MenuOverlay({
     contactTitle: string;
   };
   contact: MenuContact;
+  isCatalogue?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -137,7 +139,7 @@ export default function MenuOverlay({
         onClick={() => setOpen(true)}
         data-cursor="view"
         aria-expanded={open}
-        className="group flex items-center gap-2.5 font-sans text-[0.8125rem] tracking-[0.06em] text-bone uppercase transition-colors hover:text-accent"
+        className="group flex items-center gap-2.5 font-sans text-[0.8125rem] tracking-[0.06em] text-foreground uppercase transition-colors hover:text-accent"
       >
         <span aria-hidden className="flex h-3 w-5 flex-col justify-between">
           <span className="h-px w-full bg-current" />

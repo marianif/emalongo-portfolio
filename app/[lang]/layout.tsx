@@ -72,7 +72,9 @@ export default async function RootLayout({
       key: "bio",
       href: `/${lang}/bio`,
       label: dict.nav.bio,
-      cover: getMenuFace("bio")?.src,
+      // Biografia is the one voice that's a person, not a painting: the artist's
+      // own portrait faces it in the Index, the same image that leads /bio.
+      cover: "/artist-photo.jpg",
     },
     {
       key: "visione",

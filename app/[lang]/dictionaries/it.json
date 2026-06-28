@@ -3,7 +3,7 @@
     "home": "Home",
     "opere": "Opere",
     "bio": "Biografia",
-    "visione": "Visione",
+    "visione": "Manifesto",
     "contatti": "Contatti"
   },
   "categories": {
@@ -33,7 +33,7 @@
     "readVisione": "Leggi il manifesto",
     "worksTitle": "Opere scelte",
     "worksLead": "Una selezione, dai dipinti ai disegni alle opere digitali.",
-    "bodiesTitle": "Corpi di lavoro",
+    "bodiesTitle": "Opere",
     "enterWorks": "Entra nelle opere"
   },
   "menu": {
@@ -43,10 +43,10 @@
     "tagline": "Espressionismo visionario",
     "contactTitle": "Contatti",
     "emailLabel": "Email",
-    "email": "info@emanuelelongo.com",
+    "email": "emanuele.antonio.longo@outlook.it",
     "instagramLabel": "Instagram",
-    "instagramHandle": "@emanuele.longo",
-    "instagramUrl": "https://instagram.com/emanuele.longo"
+    "instagramHandle": "@emanuele.longo.11",
+    "instagramUrl": "https://instagram.com/emanuele.longo.11"
   },
   "opere": {
     "title": "Opere",

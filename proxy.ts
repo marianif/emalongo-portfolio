@@ -37,6 +37,12 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Run on everything except Next internals, API, and static assets.
-  matcher: ["/((?!_next/static|_next/image|api|favicon.ico|artworks).*)"],
+  // Run on everything except Next internals, API, and static assets. The final
+  // alternative skips any path whose last segment has a file extension (e.g.
+  // /artist-photo.jpg, /Mostre.docx) so public-root files are served directly
+  // and never locale-redirected — otherwise the image optimizer's internal
+  // fetch of such a file gets a 307 and reports "isn't a valid image".
+  matcher: [
+    "/((?!_next/static|_next/image|api|favicon.ico|artworks|.*\\.[^/]+$).*)",
+  ],
 };

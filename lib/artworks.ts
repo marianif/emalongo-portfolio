@@ -255,7 +255,7 @@ export const CATEGORIES: Category[] = ["dipinti", "disegni", "opere-digitali"];
  */
 const MENU_FACE_SLUGS: Record<string, string> = {
   opere: "presenze-ancestrali-tecnica-mista-su-cartone-ruvido-cm77x56-2020",
-  bio: "cosmogonia-tecnica-mista-su-cartone-cm73x50-2014",
+  // bio uses the artist's portrait (set directly in the layout), not a painting.
   visione:
     "visione-scadenza-interminabile-della-vita-tecnica-mista-su-cartone-ruvido-cm77x5",
   contatti: "paesaggio-gotico-infestato-tecnica-mista-su-tela-cm70x50-2020",

@@ -20,6 +20,41 @@ export function getContent(doc: ContentDoc, locale: Locale): string {
 }
 
 /**
+ * The biography: a heading and its body paragraphs. The bio document opens with
+ * the short biography, then a horizontal rule, then the artist statement — we
+ * read only the first movement here (the statement lives on /visione). The
+ * heading line ("Breve Biografia" / "# Short Biography") becomes an eyebrow;
+ * the rest are reading paragraphs.
+ */
+export type Bio = {
+  heading: string;
+  paragraphs: string[];
+};
+
+export function getBio(locale: Locale): Bio {
+  const raw = getContent("bio", locale);
+
+  // Drop translation-status comments, then take everything before the first
+  // horizontal rule (the statement that follows is rendered on /visione).
+  const text = raw
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .split(/^\s*---\s*$/m)[0]
+    .trim();
+
+  const lines = text.split("\n");
+  // The heading is the first non-empty line; strip any leading markdown hashes.
+  const heading = (lines.shift() ?? "").trim().replace(/^#+\s*/, "");
+
+  const paragraphs = lines
+    .join("\n")
+    .split(/\n\s*\n/)
+    .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
+    .filter(Boolean);
+
+  return { heading, paragraphs };
+}
+
+/**
  * A long-form statement parsed into its parts: an opening epigraph and its
  * attribution (the first two lines), then the manifesto as paragraphs split
  * on blank lines. The artist's prose is the work here; this just gives the

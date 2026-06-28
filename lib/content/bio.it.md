@@ -1,5 +1,9 @@
 Breve Biografia
-Emanuele Longo nasce a Torino l’11 giugno 1991. Ha vissuto a Cuneo dal 2003, dove si è diplomato al Liceo Scientifico. Comincia nell'ultimo anno di Liceo a disegnare e dipingere da autodidatta; la sua prima formazione artistica è avvenuta all’Accademia di Belle Arti di Cuneo, dove ha avuto come docente Danila Ghigliano, nella Scuola di Pittura; qui consegue la laurea di primo livello nel 2015. Dopo un periodo di difficoltà dovute all'ammalarsi del padre e alla sua scomparsa, nel 2016 torna a vivere a Torino, dove riprende gli studi in Pittura all'Accademia Albertina, con docente Laura Valle nella disciplina fondamentale. Prosegue la sua ricerca negli anni a venire, andando definendo la sua poetica pittorica. Si laurea in secondo livello in Pittura nell' anno accademico 2023/2024, (relatore prof. Giovanni Castaldi), con votazione di 110/110 e lode, presentando una tesi sul suo lavoro artistico, dal titolo “Espressionismo visionario. Aspetti simbolici nella Pittura”.
+Emanuele Longo nasce a Torino l’11 giugno 1991. Ha vissuto a Cuneo dal 2003, dove si è diplomato al Liceo Scientifico. Comincia nell'ultimo anno di Liceo a disegnare e dipingere da autodidatta; la sua prima formazione artistica è avvenuta all’Accademia di Belle Arti di Cuneo, dove ha avuto come docente Danila Ghigliano, nella Scuola di Pittura; qui consegue la laurea di primo livello nel 2015.
+
+Dopo un periodo di difficoltà dovute all'ammalarsi del padre e alla sua scomparsa, nel 2016 torna a vivere a Torino, dove riprende gli studi in Pittura all'Accademia Albertina, con docente Laura Valle nella disciplina fondamentale.
+
+Prosegue la sua ricerca negli anni a venire, andando definendo la sua poetica pittorica. Si laurea in secondo livello in Pittura nell' anno accademico 2023/2024, (relatore prof. Giovanni Castaldi), con votazione di 110/110 e lode, presentando una tesi sul suo lavoro artistico, dal titolo “Espressionismo visionario. Aspetti simbolici nella Pittura”.
 
 ---
 

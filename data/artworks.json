@@ -8,7 +8,7 @@
     "dimensions": "77x56 cm",
     "year": "2020",
     "featured": true,
-    "order": 0
+    "order": 10
   },
   "assedio-temporale-infestazioneuragano-tecnica-mista-su-cartone-cm70x50-2020": {
     "title": "Assedio temporale. Infestazione. Uragano",
@@ -82,6 +82,16 @@
     "featured": true,
     "order": 8
   },
+  "visionefantasmagoria-tecnica-mista-su-cartone-cm50x35-2024": {
+    "title": "Visione. Fantasmagoria",
+    "titleEn": "Vision. Phantasmagoria",
+    "technique": "tecnica mista su cartone",
+    "dimensions": "50x35 cm",
+    "year": "2024",
+    "featured": true,
+    "order": 0
+  },
+
   "vertigine-delle-accumulazioni-tecnica-mista-su-cartone-cm318x237-2020": {
     "title": "Vertigine delle accumulazioni",
     "titleEn": "Vertigo of Accumulations",
