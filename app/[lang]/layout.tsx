@@ -52,21 +52,22 @@ export default async function RootLayout({
 
   // The Index entries: each voice borrows a curated artwork face. Opere nests
   // the three bodies of work (each with its count) as a hover-revealed sub-row.
+  const categoryCounts = await Promise.all(
+    CATEGORIES.map(async (category) => ({
+      key: category,
+      href: `/${lang}/opere?categoria=${category}`,
+      label: dict.categories[category],
+      meta: String((await getArtworksByCategory(category)).length),
+    })),
+  );
+
   const menuEntries: MenuEntry[] = [
     {
       key: "opere",
       href: `/${lang}/opere`,
       label: dict.nav.opere,
-      cover: getMenuFace("opere")?.src,
-      children: CATEGORIES.map((category) => {
-        const works = getArtworksByCategory(category);
-        return {
-          key: category,
-          href: `/${lang}/opere?categoria=${category}`,
-          label: dict.categories[category],
-          meta: String(works.length),
-        };
-      }),
+      cover: getMenuFace("opere"),
+      children: categoryCounts,
     },
     {
       key: "bio",
@@ -80,7 +81,7 @@ export default async function RootLayout({
       key: "visione",
       href: `/${lang}/visione`,
       label: dict.nav.visione,
-      cover: getMenuFace("visione")?.src,
+      cover: getMenuFace("visione"),
     },
   ];
 

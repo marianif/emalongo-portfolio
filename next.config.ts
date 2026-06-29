@@ -6,8 +6,19 @@ const nextConfig: NextConfig = {
     // Next 16 blocks local image optimization unless the path is allow-listed.
     // The artwork tree, plus the artist's portrait at the public root.
     localPatterns: [
-      { pathname: "/artworks/**", search: "" },
+      // Committed chrome only: menu cover faces + the artist portrait. The
+      // catalogue works are delivered from Cloudinary (remotePatterns below).
+      { pathname: "/menu/**", search: "" },
       { pathname: "/artist-photo.jpg", search: "" },
+    ],
+    // Cloudinary delivery host. Artwork pixels are served from the CDN; the
+    // collection metadata is fetched via the /api/artworks routes.
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -18,30 +18,34 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
 
-  const hero = getHeroArtwork();
-  const featured = getFeaturedRest();
+  const [hero, featured] = await Promise.all([
+    getHeroArtwork(),
+    getFeaturedRest(),
+  ]);
   const fragments = dict.home.fragments;
 
   // Per body of work: cover, count, an evocative line, and a years span.
-  const gateways = CATEGORIES.map((category) => {
-    const works = getArtworksByCategory(category);
-    const years = works
-      .flatMap((w) => (w.year ? w.year.split("-") : []))
-      .map((y) => parseInt(y, 10))
-      .filter((y) => !Number.isNaN(y));
-    const span =
-      years.length > 0
-        ? `${Math.min(...years)}–${Math.max(...years)}`
-        : undefined;
-    return {
-      category,
-      label: dict.categories[category],
-      description: dict.categoryDesc[category],
-      cover: works[0],
-      count: works.length,
-      years: span,
-    };
-  });
+  const gateways = await Promise.all(
+    CATEGORIES.map(async (category) => {
+      const works = await getArtworksByCategory(category);
+      const years = works
+        .flatMap((w) => (w.year ? w.year.split("-") : []))
+        .map((y) => parseInt(y, 10))
+        .filter((y) => !Number.isNaN(y));
+      const span =
+        years.length > 0
+          ? `${Math.min(...years)}–${Math.max(...years)}`
+          : undefined;
+      return {
+        category,
+        label: dict.categories[category],
+        description: dict.categoryDesc[category],
+        cover: works[0],
+        count: works.length,
+        years: span,
+      };
+    }),
+  );
 
   const heroTitle =
     hero && lang === "en" && hero.titleEn ? hero.titleEn : hero?.title;

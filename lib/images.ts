@@ -1,31 +1,37 @@
 /**
  * Single point of indirection for artwork image sources.
  *
- * NOW: images live in `public/artworks/...` and `src` is already a usable
- * public path, so `getImageSrc` is the identity function.
+ * Sources are now Cloudinary delivery URLs (see lib/cloudinary.ts), shaped like
+ *   https://res.cloudinary.com/<cloud>/image/upload/v123/artworks/<folder>/<id>
  *
- * LATER (Cloudinary): change ONLY this file — map the local path to a
- * Cloudinary delivery URL and add the host to `next.config.ts` remotePatterns.
- * No call site needs to change.
+ * `getImageSrc` injects Cloudinary transformation params right after
+ * `/upload/`, so every <Image> gets auto-format (AVIF/WebP), auto-quality, and
+ * a width-capped variant — the CDN does the responsive work, not the browser.
+ * A non-Cloudinary src (e.g. the local `/artist-photo.jpg`) is returned
+ * untouched, so the helper is safe to call on any source.
  */
 
 export interface ImageOptions {
-  /** Target width hint; a future Cloudinary loader can use this. */
+  /** Target width hint; becomes Cloudinary `w_<n>,c_limit`. */
   width?: number;
-  /** Quality hint (1-100). */
+  /** Quality hint (1-100). Defaults to Cloudinary `q_auto`. */
   quality?: number;
 }
 
-export function getImageSrc(src: string, _options: ImageOptions = {}): string {
-  // Local mode: the stored path is already correct.
-  return src;
+const CLOUDINARY_UPLOAD = "/image/upload/";
 
-  // --- Cloudinary mode (enable later) ---------------------------------------
-  // const base = process.env.NEXT_PUBLIC_CLOUDINARY_BASE;
-  // if (!base) return src;
-  // const params = ["f_auto", "c_limit"];
-  // if (_options.width) params.push(`w_${_options.width}`);
-  // params.push(`q_${_options.quality ?? "auto"}`);
-  // const publicId = src.replace(/^\/artworks\//, "").replace(/\.[^.]+$/, "");
-  // return `${base}/${params.join(",")}/artworks/${publicId}`;
+export function getImageSrc(src: string, options: ImageOptions = {}): string {
+  const marker = src.indexOf(CLOUDINARY_UPLOAD);
+  if (!src.includes("res.cloudinary.com") || marker === -1) {
+    // Not a Cloudinary URL (local asset, external) — use as-is.
+    return src;
+  }
+
+  const params = ["f_auto"];
+  if (options.width) params.push(`w_${options.width}`, "c_limit");
+  params.push(`q_${options.quality ?? "auto"}`);
+
+  const head = src.slice(0, marker + CLOUDINARY_UPLOAD.length);
+  const tail = src.slice(marker + CLOUDINARY_UPLOAD.length);
+  return `${head}${params.join(",")}/${tail}`;
 }

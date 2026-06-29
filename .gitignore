@@ -11,8 +11,8 @@
 !.yarn/versions
 
 
-# heavy files like artist works
-/public/artworks
+# # heavy files like artist works
+# /public/artworks
 
 # testing
 /coverage
@@ -36,6 +36,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.local.example
+
+# local secrets scratch — never commit
+secrets.md
 
 # vercel
 .vercel
@@ -43,3 +47,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch dir for downscaled upload copies
+.cloudinary-tmp/
+
+# local artwork masters — delivered from Cloudinary, never committed
+public/artworks/

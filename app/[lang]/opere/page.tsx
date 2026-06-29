@@ -29,7 +29,7 @@ export default async function OperePage({
   const raw = Array.isArray(categoria) ? categoria[0] : categoria;
   const initial = isCategory(raw) ? raw : "all";
 
-  const artworks = getAllArtworks();
+  const artworks = await getAllArtworks();
 
   const labels: GalleryLabels = {
     title: dict.opere.title,

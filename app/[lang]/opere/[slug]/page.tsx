@@ -9,9 +9,10 @@ import {
 import PageTransition from "@/components/motion/PageTransition";
 import ArtworkViewer from "@/components/gallery/ArtworkViewer";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const works = await getAllArtworks();
   return LOCALES.flatMap((lang) =>
-    getAllArtworks().map((w) => ({ lang, slug: w.slug })),
+    works.map((w) => ({ lang, slug: w.slug })),
   );
 }
 
@@ -21,7 +22,7 @@ export default async function ArtworkPage({
   const { lang, slug } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const artwork = getArtworkBySlug(slug);
+  const artwork = await getArtworkBySlug(slug);
   if (!artwork) notFound();
 
   const resolveTitle = (w: { title: string; titleEn?: string }) =>
@@ -48,7 +49,7 @@ export default async function ArtworkPage({
     },
   ].filter((m): m is { label: string; value: string } => Boolean(m));
 
-  const { prev, next } = getArtworkNeighbors(slug);
+  const { prev, next } = await getArtworkNeighbors(slug);
 
   return (
     <PageTransition>
