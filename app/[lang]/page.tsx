@@ -23,6 +23,12 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     getFeaturedRest(),
   ]);
   const fragments = dict.home.fragments;
+  // The highest fragment index the featured-works loop actually surfaces (it
+  // only threads a fragment after odd-indexed works) — if that already
+  // reaches the last fragment, the standalone block below skips it.
+  const lastOddIndex = featured.length % 2 === 0 ? featured.length - 1 : featured.length - 2;
+  const lastLoopFragmentIndex =
+    lastOddIndex >= 1 ? Math.floor(lastOddIndex / 2) : -1;
 
   // Per body of work: cover, count, an evocative line, and a years span.
   const gateways = await Promise.all(
@@ -99,8 +105,8 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         lang={lang}
       />
 
-      {/* A last fragment back in the crypt before the gateways. */}
-      {fragments.length > 0 && (
+      {/* A last fragment back in the crypt before the gateways, unless the loop above already surfaced it. */}
+      {fragments.length > 0 && lastLoopFragmentIndex !== fragments.length - 1 && (
         <div className="bg-crypt px-6">
           <VoiceFragment text={fragments[fragments.length - 1]} />
         </div>
