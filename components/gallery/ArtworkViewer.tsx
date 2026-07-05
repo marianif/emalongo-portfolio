@@ -129,16 +129,8 @@ export default function ArtworkViewer({
 
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
       // The plate dims out as the work surfaces — words giving way to the image.
-      tl.to(
-        plate.current,
-        { opacity: 0, duration: 0.5, ease: "power2.in" },
-        0,
-      )
-        .to(
-          frame.current,
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2 },
-          0,
-        )
+      tl.to(plate.current, { opacity: 0, duration: 0.5, ease: "power2.in" }, 0)
+        .to(frame.current, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2 }, 0)
         .to(zoom.current, { scale: 1, duration: 1.5 }, 0)
         // Title and meta rise in just behind the image's leading edge.
         .to(
@@ -157,6 +149,7 @@ export default function ArtworkViewer({
   useEffect(() => {
     if (prev) router.prefetch(`/${lang}/opere/${prev.slug}`);
     if (next) router.prefetch(`/${lang}/opere/${next.slug}`);
+    setLoaded(false); // reset the load gate when the slug changes, so the new work re-seals and re-reveals
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
