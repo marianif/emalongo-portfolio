@@ -136,7 +136,7 @@ function Inner({
       {/* The descent — vertical scroll, each beat centred on its own axis. */}
       <div
         ref={flowRef}
-        className="relative z-10 mx-auto flex max-w-[90ch] flex-col items-center gap-[clamp(6rem,22vh,14rem)] px-6 pb-[clamp(8rem,24vh,15rem)] pt-[clamp(6rem,18vh,11rem)] text-justify sm:px-10"
+        className="relative z-10 mx-auto flex max-w-[90ch] flex-col items-center gap-[clamp(6rem,22vh,14rem)] px-6 pb-[clamp(8rem,24vh,15rem)] pt-[clamp(6rem,18vh,11rem)] sm:px-10"
       >
         {beats.map((beat, i) => (
           <Reveal as="div" key={i} y={28} className={VERSE}>

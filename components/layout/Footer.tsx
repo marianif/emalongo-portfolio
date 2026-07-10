@@ -27,6 +27,9 @@ export default function Footer({
       <p className="mt-10 font-sans text-xs text-rule">
         © {year} Emanuele Longo. {rights}.
       </p>
+      <p className="mt-2 font-sans text-xs text-rule">
+        Sito realizzato da Federica Mariani.
+      </p>
     </footer>
   );
 }

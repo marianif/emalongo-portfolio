@@ -1,0 +1,4 @@
+# Raw source images (2.2 GB) — catalogue works are delivered from Cloudinary,
+# not from public/. Never referenced by app code; excluded to stay under
+# Vercel's per-file / upload size limits.
+public/artworks
