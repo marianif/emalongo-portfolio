@@ -35,6 +35,9 @@ const hanken = Hanken_Grotesk({
 export const metadata: Metadata = {
   title: "Emanuele Longo",
   description: "Espressionismo visionario — Emanuele Longo",
+  other: {
+    "color-scheme": "light",
+  },
 };
 
 export function generateStaticParams() {

@@ -8,6 +8,11 @@
 */
 
 :root {
+  /* Force light UA rendering (scrollbars, form controls, etc.) regardless
+     of OS/browser dark-mode preference — this site defines its own two
+     grounds (crypt/catalogue) and never wants the browser's dark theme. */
+  color-scheme: light;
+
   /* --- Crypt: dark world (galleries, imagery) --- */
   --crypt-soot: #14110d; /* warm bistre near-black — gallery ground */
   --crypt-soot-deep: #0d0b08; /* deeper pool, vignettes, footer */
